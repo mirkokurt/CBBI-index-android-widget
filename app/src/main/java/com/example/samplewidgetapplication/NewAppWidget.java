@@ -14,11 +14,17 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 
 /**
@@ -49,11 +55,10 @@ public class NewAppWidget extends AppWidgetProvider {
         views.setTextViewText(R.id.appwidget_id, String.valueOf(appWidgetId));
         views.setTextViewText(R.id.appwidget_update,
                context.getResources().getString(
-                        R.string.date_count_format, count, dateString));
+                        R.string.date_count_format, dateString));
 
-        getValue(views, R.id.appwidget_id, context, appWidgetId);
-
-
+        //Call the function that fetch the CBBI API
+        getCBBIIndex(views, R.id.appwidget_id, context, appWidgetId);
 
         // Setup update button to send an update request as a pending intent.
         Intent intentUpdate = new Intent(context, NewAppWidget.class);
@@ -78,11 +83,13 @@ public class NewAppWidget extends AppWidgetProvider {
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
-    private static void getValue(RemoteViews views, int textViewid, Context context, int appWidgetId) {
+    private static void getCBBIIndex(RemoteViews views, int textViewid, Context context, int appWidgetId) {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(context);
-        String url ="https://www.google.com";
+        //String url ="https://www.google.com";
+        String url = "https://colintalkscrypto.com/cbbi/data/latest.json";
 
+        /*
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
@@ -100,10 +107,44 @@ public class NewAppWidget extends AppWidgetProvider {
                 views.setTextViewText(textViewid,
                         String.valueOf(500));
             }
-        });
+        });*/
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST,url,null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println(response);
+                        Calendar currentTime = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+                        currentTime.set(Calendar.HOUR_OF_DAY, 0);
+                        currentTime.set(Calendar.MINUTE, 0);
+                        currentTime.set(Calendar.SECOND, 0);
+                        currentTime.set(Calendar.MILLISECOND, 0);
+                        long currentTime_long = currentTime.getTimeInMillis() / 1000;
+                        // Convert String to json object
+                        try {
+                            JSONObject json = response.getJSONObject("Confidence");
+                            double confidence_value_of_today = json.getDouble(String.valueOf(currentTime_long));
+                            System.out.println(confidence_value_of_today);
+                            AppWidgetManager appMng = AppWidgetManager.getInstance(context);
+                            int[] idArray = new int[]{appWidgetId};
+                            views.setTextViewText(textViewid,
+                                    String.valueOf(confidence_value_of_today));
+                            appMng.partiallyUpdateAppWidget(idArray, views);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println(error);
+                    }
+                });
 
         // Add the request to the RequestQueue.
-        queue.add(stringRequest);
+        queue.add(jsObjRequest);
     }
 
     @Override

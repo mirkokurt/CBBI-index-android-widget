@@ -11,27 +11,28 @@
         style="@style/AppWidgetSection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/appwidget_id_label"
             style="@style/AppWidgetLabel"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="@string/widget_id_label"/>
+            android:text="@string/widget_id_label"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/appwidget_id"
             style="@style/AppWidgetText"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="end"
-            android:text="XX"/>
+            android:text="--"
+            android:textAlignment="center" />
     </LinearLayout>
 
     <!-- Panel for widget update date and number of updates -->
@@ -40,36 +41,39 @@
         style="@style/AppWidgetSection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/section_id"
-        android:orientation="vertical">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:orientation="horizontal"
+        android:textAlignment="center">
 
         <TextView
             android:id="@+id/appwidget_update_label"
             style="@style/AppWidgetLabel"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
-            android:text="@string/widget_update_label"/>
+            android:text="@string/widget_update_label"
+            android:textAlignment="center"/>
 
         <TextView
             android:id="@+id/appwidget_update"
             style="@style/AppWidgetText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/date_count_format"/>
+            android:text="@string/date_count_format" />
     </LinearLayout>
 
     <!-- Update widget button -->
     <Button
         android:id="@+id/button_update"
         style="@style/AppWidgetButton"
-        android:layout_width="wrap_content"
+        android:text="@string/refresh"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/section_update"
         android:layout_centerHorizontal="true"
-        android:text="@string/widget_button_update" />
+        />
 
 </RelativeLayout>
 

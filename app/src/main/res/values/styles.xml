@@ -12,8 +12,8 @@
 
     <!-- Style for a widget "panel" - linear layout with white background. -->
     <style name="AppWidgetSection" parent="@android:style/Widget">
-        <item name="android:padding">8dp</item>
-        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:layout_marginTop">4dp</item>
         <item name="android:layout_marginLeft">12dp</item>
         <item name="android:layout_marginRight">12dp</item>
         <item name="android:background">@android:color/white</item>

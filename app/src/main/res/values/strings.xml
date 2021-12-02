@@ -1,13 +1,14 @@
 <resources>
-    <string name="app_name">SampleWidgetApplication</string>
-    <string name="appwidget_text">EXAMPLE</string>
+    <string name="app_name">CBBIIndexWidget</string>
+    <string name="appwidget_text">CBBI</string>
     <string name="add_widget">Add widget</string>
-    <string name="date_count_format">%1$d @%2$s</string>
+    <string name="date_count_format">%1$s</string>
     <!-- Button label for the update button. -->
     <string name="widget_button_update">Update now</string>
     <!-- Heading for the updated panel. -->
     <string name="widget_update_label">Last updated</string>
     <!-- Heading for the app widget ID panel. -->
-    <string name="widget_id_label">Widget ID</string>
-    <string name="app_widget_description">This is an app widget description</string>
+    <string name="widget_id_label">CBBI Confidence</string>
+    <string name="app_widget_description">This widget show the CBBI (Colin Talks Crypto Bitcoin Bull Run Index) Confidence Index of Today</string>
+    <string name="refresh">REFRESH</string>
 </resources>
